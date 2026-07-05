@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SALES TRAINING PORTAL | au電気 × ウォーターサーバー</title>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700&family=Oswald:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0f14;
+  --bg2:#0e161d;
+  --card:#121c25;
+  --card-hi:#16222d;
+  --line:#1f2e3a;
+  --text:#e8eef2;
+  --text-soft:#8fa3b0;
+  --denki:#ff7a1a;
+  --denki-glow:rgba(255,122,26,.35);
+  --water:#22c8e6;
+  --water-glow:rgba(34,200,230,.35);
+  --radius:16px;
+  --disp:'Zen Kaku Gothic New',sans-serif;
+  --en:'Oswald',sans-serif;
+  --body:'Noto Sans JP',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--body);background:var(--bg);color:var(--text);line-height:1.75;font-size:15px;
+  background-image:
+    radial-gradient(1200px 500px at 80% -10%, rgba(34,200,230,.07), transparent 60%),
+    radial-gradient(1000px 500px at 10% -10%, rgba(255,122,26,.07), transparent 60%);
+  background-repeat:no-repeat}
+
+/* ===== header ===== */
+header{padding:34px 20px 0;position:relative;overflow:hidden}
+.h-inner{max-width:960px;margin:0 auto;position:relative}
+.h-eyebrow{font-family:var(--en);font-size:12px;letter-spacing:.42em;color:var(--text-soft);font-weight:600}
+h1{font-family:var(--disp);font-weight:900;font-size:clamp(26px,6vw,44px);letter-spacing:.02em;margin:8px 0 4px;line-height:1.25}
+h1 .grad{background:linear-gradient(92deg,var(--denki) 10%,#ffb257 40%,#7fe3f5 60%,var(--water) 90%);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.h-sub{font-size:13px;color:var(--text-soft);margin-bottom:26px}
+
+/* main tabs */
+.tabs{display:flex;gap:10px;max-width:960px;margin:0 auto}
+.tab{flex:1;appearance:none;cursor:pointer;font-family:var(--disp);font-weight:900;
+  font-size:clamp(15px,3.6vw,19px);padding:16px 8px;border-radius:14px 14px 0 0;
+  background:var(--bg2);color:var(--text-soft);border:1px solid var(--line);border-bottom:none;
+  transition:color .15s, box-shadow .2s, background .15s;position:relative;overflow:hidden}
+.tab:focus-visible{outline:3px solid var(--water);outline-offset:-3px}
+.tab .en{display:block;font-family:var(--en);font-size:10px;letter-spacing:.35em;font-weight:600;opacity:.55;margin-bottom:2px}
+.tab::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:transparent;transition:background .2s}
+.tab[data-t="denki"][aria-selected="true"]{color:#fff;background:var(--card);box-shadow:0 -6px 30px -8px var(--denki-glow) inset}
+.tab[data-t="denki"][aria-selected="true"]::after{background:linear-gradient(90deg,var(--denki),#ffb257)}
+.tab[data-t="water"][aria-selected="true"]{color:#fff;background:var(--card);box-shadow:0 -6px 30px -8px var(--water-glow) inset}
+.tab[data-t="water"][aria-selected="true"]::after{background:linear-gradient(90deg,var(--water),#7fe3f5)}
+
+main{max-width:960px;margin:0 auto;padding:24px 16px 90px}
+.panel{display:none}
+.panel.active{display:block;animation:fade .3s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.panel.active,.subpanel.active{animation:none}}
+
+/* ===== sub nav ===== */
+.subnav{display:flex;gap:6px;background:var(--bg2);border:1px solid var(--line);padding:6px;border-radius:14px;margin-bottom:26px;position:sticky;top:10px;z-index:10;box-shadow:0 8px 30px rgba(0,0,0,.45)}
+.subtab{flex:1;appearance:none;border:0;cursor:pointer;font-family:var(--disp);font-weight:700;
+  font-size:clamp(12px,3vw,14px);padding:12px 4px;border-radius:10px;background:transparent;color:var(--text-soft);
+  transition:background .15s,color .15s,box-shadow .2s}
+.subtab:focus-visible{outline:3px solid var(--water);outline-offset:-3px}
+.p-denki .subtab[aria-selected="true"]{background:linear-gradient(120deg,var(--denki),#ff9a4d);color:#14100b;box-shadow:0 4px 20px -4px var(--denki-glow)}
+.p-water .subtab[aria-selected="true"]{background:linear-gradient(120deg,var(--water),#5fdcf2);color:#06181d;box-shadow:0 4px 20px -4px var(--water-glow)}
+.subpanel{display:none}
+.subpanel.active{display:block;animation:fade .25s ease}
+
+/* ===== section title ===== */
+.sec{margin:8px 0 18px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.sec .en{font-family:var(--en);font-size:12px;letter-spacing:.35em;font-weight:600;color:var(--text-soft)}
+.sec h2{font-family:var(--disp);font-weight:900;font-size:clamp(19px,4.5vw,24px);letter-spacing:.03em}
+.p-denki .sec h2{text-shadow:0 0 30px var(--denki-glow)}
+.p-water .sec h2{text-shadow:0 0 30px var(--water-glow)}
+.lead{font-size:13px;color:var(--text-soft);margin:-8px 0 20px}
+
+/* ===== video cards ===== */
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.vgrid.single{grid-template-columns:1fr;max-width:720px;margin:0 auto}
+.vcard{background:linear-gradient(160deg,var(--card-hi),var(--card));border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:transform .18s,border-color .18s,box-shadow .18s}
+.vcard:hover{transform:translateY(-3px)}
+.p-denki .vcard:hover{border-color:var(--denki);box-shadow:0 14px 40px -12px var(--denki-glow)}
+.p-water .vcard:hover{border-color:var(--water);box-shadow:0 14px 40px -12px var(--water-glow)}
+.vframe{position:relative;width:100%;aspect-ratio:16/9;background:#060a0d}
+.vframe iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vempty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#4d6371;font-size:12px;gap:6px;
+  background:repeating-linear-gradient(-45deg,transparent 0 12px,rgba(255,255,255,.02) 12px 24px)}
+.vempty .ico{font-size:30px;filter:grayscale(.4)}
+.vlink-only{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:repeating-linear-gradient(-45deg,transparent 0 12px,rgba(255,255,255,.02) 12px 24px)}
+.playbtn{display:inline-flex;align-items:center;gap:10px;font-family:var(--disp);font-weight:700;font-size:14px;padding:12px 22px;border-radius:999px;text-decoration:none;transition:transform .15s}
+.playbtn:hover{transform:scale(1.05)}
+.p-denki .playbtn{background:linear-gradient(120deg,var(--denki),#ff9a4d);color:#14100b;box-shadow:0 6px 24px -6px var(--denki-glow)}
+.p-water .playbtn{background:linear-gradient(120deg,var(--water),#5fdcf2);color:#06181d;box-shadow:0 6px 24px -6px var(--water-glow)}
+.vinfo{padding:13px 16px 15px}
+.vnum{font-family:var(--en);font-size:11px;letter-spacing:.3em;font-weight:600;color:var(--text-soft)}
+.p-denki .vnum{color:var(--denki)} .p-water .vnum{color:var(--water)}
+.vtitle{font-family:var(--disp);font-weight:700;font-size:15px;line-height:1.5;margin-top:2px}
+.vdesc{font-size:12px;color:var(--text-soft);margin-top:4px}
+.vopen{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;margin-top:10px;text-decoration:none}
+.p-denki .vopen{color:var(--denki)} .p-water .vopen{color:var(--water)}
+.vopen:hover{text-decoration:underline}
+
+/* ===== doc link cards (scripts/materials) ===== */
+.dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.dcard{display:flex;align-items:center;gap:14px;background:linear-gradient(160deg,var(--card-hi),var(--card));border:1px solid var(--line);border-radius:var(--radius);padding:16px;text-decoration:none;color:var(--text);transition:transform .18s,border-color .18s,box-shadow .18s}
+.dcard:hover{transform:translateY(-3px)}
+.p-denki .dcard:hover{border-color:var(--denki);box-shadow:0 14px 40px -12px var(--denki-glow)}
+.p-water .dcard:hover{border-color:var(--water);box-shadow:0 14px 40px -12px var(--water-glow)}
+.dico{width:48px;height:48px;flex:none;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.p-denki .dico{background:rgba(255,122,26,.12)} .p-water .dico{background:rgba(34,200,230,.12)}
+.dtitle{font-family:var(--disp);font-weight:700;font-size:14px;line-height:1.5}
+.ddesc{font-size:12px;color:var(--text-soft)}
+.dcard.empty{opacity:.45;cursor:default;border-style:dashed}
+.dcard .arrow{margin-left:auto;color:var(--text-soft);font-size:18px;flex:none}
+
+.foot{margin-top:60px;font-size:11px;color:#4d6371;text-align:center;line-height:1.9;font-family:var(--en);letter-spacing:.15em}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="h-inner">
+    <div class="h-eyebrow">SALES TRAINING PORTAL</div>
+    <h1><span class="grad">au電気 × ウォーターサーバー</span><br>商材研修サイト</h1>
+    <div class="h-sub">動画で学ぶ → スクリプトで練習 → ロープレで仕上げる</div>
+  </div>
+  <nav class="tabs" role="tablist" aria-label="商材">
+    <button class="tab" data-t="denki" role="tab" aria-selected="true"><span class="en">ELECTRICITY</span>⚡ au電気</button>
+    <button class="tab" data-t="water" role="tab" aria-selected="false"><span class="en">WATER SERVER</span>💧 ウォーターサーバー</button>
+  </nav>
+</header>
+
+<main>
+
+<!-- ============ au電気 ============ -->
+<section id="panel-denki" class="panel p-denki active" role="tabpanel">
+  <nav class="subnav" role="tablist" aria-label="au電気メニュー">
+    <button class="subtab" data-s="script" aria-selected="true">📝 トークスクリプト</button>
+    <button class="subtab" data-s="ropure" aria-selected="false">🎬 ロープレ動画</button>
+    <button class="subtab" data-s="kaisetsu" aria-selected="false">📚 商材解説動画</button>
+  </nav>
+
+  <div class="subpanel active" data-s="script">
+    <div class="sec"><span class="en">SCRIPT</span><h2>トークスクリプト</h2></div>
+    <div class="lead">既存のスクリプト資料へのリンク集です。タップで開きます。</div>
+    <div class="dgrid" id="d-denki-script"></div>
+  </div>
+
+  <div class="subpanel" data-s="ropure">
+    <div class="sec"><span class="en">ROLE-PLAY</span><h2>ロープレ動画</h2></div>
+    <div class="lead">動画を見る → 声に出して真似する → 先輩相手にロープレ、の順で。</div>
+    <div class="vgrid" id="v-denki-ropure"></div>
+  </div>
+
+  <div class="subpanel" data-s="kaisetsu">
+    <div class="sec"><span class="en">PRODUCT</span><h2>商材解説動画</h2></div>
+    <div class="lead">初日はまずここから。視聴後にメリットを口頭で説明できるかチェックされます。</div>
+    <div class="vgrid" id="v-denki-kaisetsu"></div>
+  </div>
+</section>
+
+<!-- ============ ウォーターサーバー ============ -->
+<section id="panel-water" class="panel p-water" role="tabpanel">
+  <nav class="subnav" role="tablist" aria-label="ウォーターサーバーメニュー">
+    <button class="subtab" data-s="script" aria-selected="true">📝 トークスクリプト</button>
+    <button class="subtab" data-s="ropure" aria-selected="false">🎬 ロープレ動画</button>
+    <button class="subtab" data-s="kaisetsu" aria-selected="false">📚 商材解説動画</button>
+  </nav>
+
+  <div class="subpanel active" data-s="script">
+    <div class="sec"><span class="en">SCRIPT</span><h2>トークスクリプト</h2></div>
+    <div class="lead">既存のスクリプト資料へのリンク集です。タップで開きます。</div>
+    <div class="dgrid" id="d-water-script"></div>
+  </div>
+
+  <div class="subpanel" data-s="ropure">
+    <div class="sec"><span class="en">ROLE-PLAY</span><h2>ロープレ動画</h2></div>
+    <div class="lead">コスモ・エブリィそれぞれの流れを確認してから練習に入ってください。</div>
+    <div class="vgrid" id="v-water-ropure"></div>
+  </div>
+
+  <div class="subpanel" data-s="kaisetsu">
+    <div class="sec"><span class="en">PRODUCT</span><h2>商材解説動画</h2></div>
+    <div class="lead">視聴後「コスモとエブリィの違いを30秒で説明」できるかチェックされます。</div>
+    <div class="vgrid" id="v-water-kaisetsu"></div>
+  </div>
+</section>
+
+<div class="foot">INTERNAL USE ONLY — SALES TRAINING PORTAL</div>
+</main>
+
+<script>
+/* ============================================================
+   ▼▼▼ リンクはここに貼るだけ ▼▼▼
+   ------------------------------------------------------------
+   ● 動画(videos)
+     url に動画URLを貼り付け。
+     ・YouTube(通常/youtu.be/shorts/限定公開OK)
+       → サイト内プレイヤーでその場で再生
+     ・それ以外(Google Drive, Vimeo, Dropbox 等)
+       → 「▶ 動画を開く」ボタンになり別タブ再生
+   ● スクリプト資料(scripts)
+     url にGoogleドキュメント・PDF・Notion等のURLを貼り付け。
+     → タップで開くリンクカードになります
+   ● {title:"", desc:"", url:""} の行をコピーして追加すれば
+     カードはいくつでも増やせます
+============================================================ */
+const scripts = {
+  denki: [
+    {title:"au電気 トークスクリプト", desc:"ファーストトーク〜クロージング", url:""},
+    {title:"au電気 切り返し集", desc:"断り文句への対応パターン", url:""}
+  ],
+  water: [
+    {title:"コスモウォーター トークスクリプト", desc:"提案〜クロージング", url:""},
+    {title:"エブリィフレシャス トークスクリプト", desc:"提案〜クロージング", url:""}
+  ]
+};
+
+const videos = {
+  denki: {
+    ropure: [
+      {title:"au電気 ロープレ動画", desc:"ファーストトーク〜クロージングまでの一連の流れ", url:""}
+    ],
+    kaisetsu: [
+      {title:"au電気の基本", desc:"仕組みと切り替えメリット", url:""},
+      {title:"検針票の見方", desc:"チェックすべきポイント", url:""}
+    ]
+  },
+  water: {
+    ropure: [
+      {title:"ウォーターサーバー ロープレ動画", desc:"ヒアリング〜提案〜クロージングまでの一連の流れ", url:""}
+    ],
+    kaisetsu: [
+      {title:"コスモウォーター解説", desc:"特徴・料金・足元交換", url:""},
+      {title:"エブリィフレシャス解説", desc:"浄水型の仕組みと機種", url:""}
+    ]
+  }
+};
+/* ▲▲▲ リンクはここまで ▲▲▲ */
+
+function ytEmbed(url){
+  try{
+    const u=new URL(url);
+    let id=null;
+    if(u.hostname==="youtu.be") id=u.pathname.slice(1).split("/")[0];
+    else if(u.hostname.includes("youtube.com")){
+      if(u.pathname.startsWith("/watch")) id=u.searchParams.get("v");
+      else if(u.pathname.startsWith("/shorts/")) id=u.pathname.split("/")[2];
+      else if(u.pathname.startsWith("/embed/")) id=u.pathname.split("/")[2];
+      else if(u.pathname.startsWith("/live/")) id=u.pathname.split("/")[2];
+    }
+    return id?`https://www.youtube.com/embed/${id}`:null;
+  }catch(e){return null}
+}
+
+function pad(n){return String(n).padStart(2,"0")}
+
+function renderVideos(listId,items){
+  const el=document.getElementById(listId);
+  if(items.length===1) el.classList.add("single");
+  el.innerHTML=items.map((v,i)=>{
+    let frame;
+    if(!v.url){
+      frame=`<div class="vempty"><span class="ico">🎬</span>動画URL 準備中</div>`;
+    }else{
+      const emb=ytEmbed(v.url);
+      frame = emb
+        ? `<iframe src="${emb}" title="${v.title}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>`
+        : `<div class="vlink-only"><a class="playbtn" href="${v.url}" target="_blank" rel="noopener">▶ 動画を開く</a></div>`;
+    }
+    const open = v.url?`<a class="vopen" href="${v.url}" target="_blank" rel="noopener">↗ 別タブで開く</a>`:"";
+    const num = items.length>1?`<div class="vnum">EPISODE ${pad(i+1)}</div>`:"";
+    return `<div class="vcard">
+      <div class="vframe">${frame}</div>
+      <div class="vinfo">
+        ${num}
+        <div class="vtitle">${v.title}</div>
+        <div class="vdesc">${v.desc||""}</div>${open}
+      </div></div>`;
+  }).join("");
+}
+
+function renderDocs(listId,items){
+  const el=document.getElementById(listId);
+  el.innerHTML=items.map(d=>{
+    if(!d.url){
+      return `<div class="dcard empty"><div class="dico">📝</div><div><div class="dtitle">${d.title}</div><div class="ddesc">リンク未設定</div></div></div>`;
+    }
+    return `<a class="dcard" href="${d.url}" target="_blank" rel="noopener">
+      <div class="dico">📝</div>
+      <div><div class="dtitle">${d.title}</div><div class="ddesc">${d.desc||""}</div></div>
+      <span class="arrow">›</span></a>`;
+  }).join("");
+}
+
+renderDocs("d-denki-script",scripts.denki);
+renderDocs("d-water-script",scripts.water);
+renderVideos("v-denki-ropure",videos.denki.ropure);
+renderVideos("v-denki-kaisetsu",videos.denki.kaisetsu);
+renderVideos("v-water-ropure",videos.water.ropure);
+renderVideos("v-water-kaisetsu",videos.water.kaisetsu);
+
+// メインタブ
+const tabs=document.querySelectorAll('.tab');
+const panels={denki:document.getElementById('panel-denki'),water:document.getElementById('panel-water')};
+tabs.forEach(t=>t.addEventListener('click',()=>{
+  tabs.forEach(x=>x.setAttribute('aria-selected','false'));
+  t.setAttribute('aria-selected','true');
+  Object.values(panels).forEach(p=>p.classList.remove('active'));
+  panels[t.dataset.t].classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}));
+
+// サブタブ
+document.querySelectorAll('.panel').forEach(panel=>{
+  const subtabs=panel.querySelectorAll('.subtab');
+  const subpanels=panel.querySelectorAll('.subpanel');
+  subtabs.forEach(st=>st.addEventListener('click',()=>{
+    subtabs.forEach(x=>x.setAttribute('aria-selected','false'));
+    st.setAttribute('aria-selected','true');
+    subpanels.forEach(sp=>sp.classList.toggle('active',sp.dataset.s===st.dataset.s));
+  }));
+});
+</script>
+</body>
+</html>
