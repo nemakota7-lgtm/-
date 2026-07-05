@@ -224,7 +224,7 @@ const scripts = {
 const videos = {
   denki: {
     ropure: [
-      {title:"au電気 ロープレ動画", desc:"ファーストトーク〜クロージングまでの一連の流れ", url:""}
+      {title:"au電気 トーク/ロープレ", desc:"ファーストトーク〜クロージングまでの一連の流れ", url:"https://youtu.be/NOiqqfr3-MY"}
     ],
     kaisetsu: [
       {title:"au電気の基本", desc:"仕組みと切り替えメリット", url:""},
@@ -233,7 +233,8 @@ const videos = {
   },
   water: {
     ropure: [
-      {title:"ウォーターサーバー ロープレ動画", desc:"ヒアリング〜提案〜クロージングまでの一連の流れ", url:""}
+      {title:"コスモウォーター 新規トーク/ロープレ", desc:"新規のお客様への提案の流れ", url:"https://youtu.be/5TJONgJpdrY"},
+      {title:"エブリィフレシャス 乗換トーク/ロープレ", desc:"他社からの乗り換え提案の流れ", url:"https://youtu.be/Ro8oqkgevZU"}
     ],
     kaisetsu: [
       {title:"コスモウォーター解説", desc:"特徴・料金・足元交換", url:""},
@@ -274,11 +275,9 @@ function renderVideos(listId,items){
         : `<div class="vlink-only"><a class="playbtn" href="${v.url}" target="_blank" rel="noopener">▶ 動画を開く</a></div>`;
     }
     const open = v.url?`<a class="vopen" href="${v.url}" target="_blank" rel="noopener">↗ 別タブで開く</a>`:"";
-    const num = items.length>1?`<div class="vnum">EPISODE ${pad(i+1)}</div>`:"";
     return `<div class="vcard">
       <div class="vframe">${frame}</div>
       <div class="vinfo">
-        ${num}
         <div class="vtitle">${v.title}</div>
         <div class="vdesc">${v.desc||""}</div>${open}
       </div></div>`;
